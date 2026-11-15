@@ -20,6 +20,8 @@ jobs:
 
     - name: Setup Android SDK & NDK
       uses: android-actions/setup-android@v4
+      env:
+        SKIP_JDK_VERSION_CHECK: true
       with:
         ndk-version: '25.2.9519653'
 
