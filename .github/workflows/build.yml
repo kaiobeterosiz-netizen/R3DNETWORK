@@ -12,18 +12,25 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Set up JDK 11
+    - name: Set up JDK 17 (Para o SDK)
+      uses: actions/setup-java@v5
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v4
+
+    - name: Install NDK
+      run: |
+        sdkmanager "ndk;25.2.9519653"
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+
+    - name: Set up JDK 11 (Para o Gradle)
       uses: actions/setup-java@v5
       with:
         java-version: '11'
         distribution: 'temurin'
-
-    - name: Setup Android SDK & NDK
-      uses: android-actions/setup-android@v4
-      env:
-        SKIP_JDK_VERSION_CHECK: true
-      with:
-        ndk-version: '25.2.9519653'
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v6
